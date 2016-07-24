@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coin Jar Calculator</title>
+    <script>
+
+        function calcJar(jarSize){
+
+            var totalCents = 0;
+            var sizeCounter = 0; // keep track of fluid ounces as jar is filled
+
+            var coins = {
+                penny: {
+                    volume: 0.0122,
+                    count: 0,
+                    value: 1
+                },
+                nickel:{
+                    volume: 0.0243,
+                    count: 0,
+                    value: 5
+                },
+                dime: {
+                    volume: 0.0115,
+                    count: 0,
+                    value: 10
+                },
+                quarter:{
+                    volume: 0.027,
+                    count: 0,
+                    value: 25
+                }
+            };
+
+            fill_jar_block: {
+
+                while (sizeCounter < jarSize) {
+                    for (var key in coins) {
+                        if (!coins.hasOwnProperty(key)) continue;
+
+                        if ((sizeCounter + coins[key].volume) > jarSize) {
+                            break fill_jar_block;
+                        } else {
+                            coins[key].count++;
+                            sizeCounter += coins[key].volume;
+                        }
+                    }
+                }
+            }
+
+            for (var key in coins) {
+                if (!coins.hasOwnProperty(key)) continue;
+                totalCents += (coins[key].count * coins[key].value);
+            }
+
+            console.log("jarSize " + jarSize + ' ounces');
+            console.log("$" + (totalCents / 100));
+        }
+
+        // 3 liter = 101.442 ounces
+        // 1 gallon = 128 ounces
+        // 2 gallon = 256 ounces
+
+        calcJar(101.442);
+        calcJar(128);
+        calcJar(256);
+
+    </script>
+</head>
+<body>
+    <h1>Coin Jar Calculator</h1>
+    <p>A quick hack to guess how many coins are in Wayne's coin jar at various jar sizes.</p>
+</body>
+</html>
